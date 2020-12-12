@@ -3,7 +3,6 @@ package com.spring.project.lab.domain.implementation;
 import com.spring.project.lab.domain.GeneralModelInterface;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "received_call", schema = "fedyniak_illya_db", catalog = "")
@@ -14,19 +13,6 @@ public class ReceivedCall implements GeneralModelInterface {
     private PersonInformationReport personInformationReportByPersonInformationReportId;
     private String dateTime;
     private CrewAccepted crewAcceptedByCrewAcceptedId;
-
-
-    public ReceivedCall() {
-    }
-
-    public ReceivedCall(final Integer id, final Description descriptionByDescriptionId, final String address, final PersonInformationReport personInformationReportByPersonInformationReportId, final String dateTime, final CrewAccepted crewAcceptedByCrewAcceptedId) {
-        this.id = id;
-        this.descriptionByDescriptionId = descriptionByDescriptionId;
-        this.address = address;
-        this.personInformationReportByPersonInformationReportId = personInformationReportByPersonInformationReportId;
-        this.dateTime = dateTime;
-        this.crewAcceptedByCrewAcceptedId = crewAcceptedByCrewAcceptedId;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -93,17 +79,22 @@ public class ReceivedCall implements GeneralModelInterface {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         ReceivedCall that = (ReceivedCall) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(address, that.address) &&
-                Objects.equals(dateTime, that.dateTime);
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (address != null ? !address.equals(that.address) : that.address != null) return false;
+        if (dateTime != null ? !dateTime.equals(that.dateTime) : that.dateTime != null) return false;
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, address, dateTime);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (address != null ? address.hashCode() : 0);
+        result = 31 * result + (dateTime != null ? dateTime.hashCode() : 0);
+        return result;
     }
-
 
     @Override
     public String toString() {

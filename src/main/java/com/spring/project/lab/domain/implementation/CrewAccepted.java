@@ -3,8 +3,6 @@ package com.spring.project.lab.domain.implementation;
 import com.spring.project.lab.domain.GeneralModelInterface;
 
 import javax.persistence.*;
-import java.util.Collection;
-import java.util.Objects;
 
 @Entity
 @Table(name = "crew_accepted", schema = "fedyniak_illya_db", catalog = "")
@@ -15,29 +13,6 @@ public class CrewAccepted implements GeneralModelInterface {
     private String typeOfCar;
     private String depatureTime;
     private String arriveTime;
-    private Collection<ReceivedCall> receivedCallsById;
-
-    public CrewAccepted() {
-    }
-
-    public CrewAccepted(Integer id, String number, String numberOfCar, String typeOfCar, String depatureTime, String arriveTime) {
-        this.id = id;
-        this.number = number;
-        this.numberOfCar = numberOfCar;
-        this.typeOfCar = typeOfCar;
-        this.depatureTime = depatureTime;
-        this.arriveTime = arriveTime;
-    }
-
-    public CrewAccepted(final Integer id, final String number, final String numberOfCar, final String typeOfCar, final String depatureTime, final String arriveTime, final Collection<ReceivedCall> receivedCallsById) {
-        this.id = id;
-        this.number = number;
-        this.numberOfCar = numberOfCar;
-        this.typeOfCar = typeOfCar;
-        this.depatureTime = depatureTime;
-        this.arriveTime = arriveTime;
-        this.receivedCallsById = receivedCallsById;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -100,34 +75,33 @@ public class CrewAccepted implements GeneralModelInterface {
         this.arriveTime = arriveTime;
     }
 
-
-    @OneToMany(mappedBy = "crewAcceptedByCrewAcceptedId")
-    public Collection<ReceivedCall> getReceivedCallsById() {
-        return receivedCallsById;
-    }
-
-    public void setReceivedCallsById(Collection<ReceivedCall> receivedCallsById) {
-        this.receivedCallsById = receivedCallsById;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         CrewAccepted that = (CrewAccepted) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(number, that.number) &&
-                Objects.equals(numberOfCar, that.numberOfCar) &&
-                Objects.equals(typeOfCar, that.typeOfCar) &&
-                Objects.equals(depatureTime, that.depatureTime) &&
-                Objects.equals(arriveTime, that.arriveTime);
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (number != null ? !number.equals(that.number) : that.number != null) return false;
+        if (numberOfCar != null ? !numberOfCar.equals(that.numberOfCar) : that.numberOfCar != null) return false;
+        if (typeOfCar != null ? !typeOfCar.equals(that.typeOfCar) : that.typeOfCar != null) return false;
+        if (depatureTime != null ? !depatureTime.equals(that.depatureTime) : that.depatureTime != null) return false;
+        if (arriveTime != null ? !arriveTime.equals(that.arriveTime) : that.arriveTime != null) return false;
+
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, number, numberOfCar, typeOfCar, depatureTime, arriveTime);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (number != null ? number.hashCode() : 0);
+        result = 31 * result + (numberOfCar != null ? numberOfCar.hashCode() : 0);
+        result = 31 * result + (typeOfCar != null ? typeOfCar.hashCode() : 0);
+        result = 31 * result + (depatureTime != null ? depatureTime.hashCode() : 0);
+        result = 31 * result + (arriveTime != null ? arriveTime.hashCode() : 0);
+        return result;
     }
-
 
     @Override
     public String toString() {

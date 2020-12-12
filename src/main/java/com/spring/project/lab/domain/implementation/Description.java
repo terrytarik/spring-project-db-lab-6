@@ -3,7 +3,6 @@ package com.spring.project.lab.domain.implementation;
 import com.spring.project.lab.domain.GeneralModelInterface;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
 @Table(name = "description", schema = "fedyniak_illya_db", catalog = "")
@@ -12,9 +11,6 @@ public class Description implements GeneralModelInterface {
     private String shortDesc;
     private String expandedDesc;
     private EmergencyDetails emergencyDetailsByEmergencyDetailsId;
-
-    public Description() {
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +43,6 @@ public class Description implements GeneralModelInterface {
         this.expandedDesc = expandedDesc;
     }
 
-
     @ManyToOne
     @JoinColumn(name = "emergency_details_id", referencedColumnName = "id", nullable = false)
     public EmergencyDetails getEmergencyDetailsByEmergencyDetailsId() {
@@ -58,31 +53,26 @@ public class Description implements GeneralModelInterface {
         this.emergencyDetailsByEmergencyDetailsId = emergencyDetailsByEmergencyDetailsId;
     }
 
-//    @OneToMany(mappedBy = "descriptionByDescriptionId")
-//    public Collection<ReceivedCall> getReceivedCallsById() {
-//        return receivedCallsById;
-//    }
-//
-//    public void setReceivedCallsById(Collection<ReceivedCall> receivedCallsById) {
-//        this.receivedCallsById = receivedCallsById;
-//    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
+
         Description that = (Description) o;
-        return Objects.equals(id, that.id) &&
-                Objects.equals(shortDesc, that.shortDesc) &&
-                Objects.equals(expandedDesc, that.expandedDesc) &&
-                Objects.equals(emergencyDetailsByEmergencyDetailsId, that.emergencyDetailsByEmergencyDetailsId);
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        if (shortDesc != null ? !shortDesc.equals(that.shortDesc) : that.shortDesc != null) return false;
+        if (expandedDesc != null ? !expandedDesc.equals(that.expandedDesc) : that.expandedDesc != null) return false;
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, shortDesc, expandedDesc, emergencyDetailsByEmergencyDetailsId);
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (shortDesc != null ? shortDesc.hashCode() : 0);
+        result = 31 * result + (expandedDesc != null ? expandedDesc.hashCode() : 0);
+        return result;
     }
-
 
     @Override
     public String toString() {
